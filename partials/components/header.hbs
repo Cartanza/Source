@@ -1,19 +1,18 @@
-{{#match headerStyle "!=" "Off"}}
+{{!--
+    Parameters:
+    * layout (wide, side)
+    * background (color, image)
+    * action (button, email, search)
+--}}
 
-    {{#match headerStyle "Highlight"}}
-        {{> "components/header-content"}}
-    {{else match headerStyle "Magazine"}}
-        {{> "components/header-content"}}
-    {{else}}
-        {{#match headerStyle "Landing"}}
-            {{#if @site.members_enabled}}
-                {{#unless @member}}
-                    {{> "components/header-content"}}
-                {{/unless}}
-            {{/if}}
-        {{else}}
-            {{> "components/header-content"}}
-        {{/match}}
-    {{/match}}
-
-{{/match}}
+{{#if @site.description}}
+    {{> components/header-content}}
+{{else}}
+    {{#if @site.cover_image}}
+        {{> components/header-content}}
+    {{else}}    
+        {{#if action}}
+            {{> components/header-content}}
+        {{/if}}
+    {{/if}}
+{{/if}}
