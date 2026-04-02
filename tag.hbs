@@ -1,10 +1,10 @@
-{{!< default}}
+{{#*inline "body"}}
 {{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
 
 <main class="gh-main gh-outer">
 
-    {{#tag}}
-        <section class="gh-archive{{#if feature_image}} has-image{{/if}}{{#if @custom.show_publication_info_sidebar}} has-sidebar{{/if}} gh-inner">
+    {{#with tag}}
+        <section class="gh-archive{{#if feature_image}} has-image{{/if}}{{#if @root.custom.show_publication_info_sidebar}} has-sidebar{{/if}} gh-inner">
             <div class="gh-archive-inner">
                 <header class="gh-archive-wrapper">
                     <h1 class="gh-article-title is-title">{{name}}</h1>
@@ -12,11 +12,13 @@
                         <p class="gh-article-excerpt">{{description}}</p>
                     {{/if}}
                 </header>
-                {{> "feature-image"}}
+                {{> partials/feature-image}}
             </div>
         </section>
-    {{/tag}}
+    {{/with}}
 
-    {{> "components/post-list" feed="archive" postFeedStyle=@custom.post_feed_style showTitle=false showSidebar=@custom.show_publication_info_sidebar}}
+    {{> partials/components/post-list feed="archive" postFeedStyle=@root.custom.post_feed_style showTitle=false showSidebar=@root.custom.show_publication_info_sidebar}}
 
 </main>
+{{/inline}}
+{{> default}}

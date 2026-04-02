@@ -1,10 +1,10 @@
-{{!< default}}
+{{#*inline "body"}}
 {{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
 
 <main class="gh-main gh-outer">
 
-    {{#author}}
-        <section class="gh-archive{{#if @custom.show_publication_info_sidebar}} has-sidebar{{/if}} gh-inner">
+    {{#with author}}
+        <section class="gh-archive{{#if @root.custom.show_publication_info_sidebar}} has-sidebar{{/if}} gh-inner">
             <div class="gh-archive-inner">
                 <div class="gh-archive-wrapper">
                     <h1 class="gh-article-title is-title">
@@ -20,10 +20,10 @@
                     <footer class="gh-author-meta">
                         <div class="gh-author-social">
                             {{#if facebook}}
-                                <a class="gh-author-social-link" href="{{facebook_url}}" target="_blank" rel="noopener">{{> "icons/facebook"}}</a>
+                                <a class="gh-author-social-link" href="{{facebook_url}}" target="_blank" rel="noopener">{{> partials/icons/facebook}}</a>
                             {{/if}}
                             {{#if twitter}}
-                                <a class="gh-author-social-link" href="{{twitter_url}}" target="_blank" rel="noopener">{{> "icons/twitter"}}</a>
+                                <a class="gh-author-social-link" href="{{twitter_url}}" target="_blank" rel="noopener">{{> partials/icons/twitter}}</a>
                             {{/if}}
                         </div>
                         {{#if location}}
@@ -36,8 +36,10 @@
                 {{/if}}
             </div>
         </section>
-    {{/author}}
+    {{/with}}
     
-    {{> "components/post-list" feed="archive" postFeedStyle=@custom.post_feed_style showTitle=false showSidebar=@custom.show_publication_info_sidebar}}
+    {{> partials/components/post-list feed="archive" postFeedStyle=@root.custom.post_feed_style showTitle=false showSidebar=@root.custom.show_publication_info_sidebar}}
 
 </main>
+{{/inline}}
+{{> default}}

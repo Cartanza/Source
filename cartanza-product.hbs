@@ -1,13 +1,12 @@
-{{!< default}}
-
+{{#*inline "body"}}
 {{!-- The tag above means: insert everything in this file
 into the {body} tag of the default.hbs template --}}
 
-{{#cartanza_product}}
-    <div class="cartanza-product-container" style="display:flex;justify-content: space-between;margin: auto;max-width: var(--container-width);width: 100%;">
+{{#with cartanza_product}}
+    <div class="cartanza-product-container" style="display:flex;justify-content: space-between;margin: auto;margin-top: 10%;max-width: var(--container-width);width: 100%;">
         <div class="cartanza-product-image-container" style="display:flex;width:50%;">
             <div class="cartanza-product-image-picker-container" style="width:25%;">
-            <ul class="" role="" style="list-style-type: none;" id="product-image-picker">
+            <ul class="" role="" style="list-style-type: none;margin-top:0;" id="product-image-picker">
             {{#foreach images}}
                 <li class="" role="" style="{{#if (eq @index 0) }}border: 3px solid #888888;{{/if}}margin-bottom: 5px;">
                     <img class="" src="/content/images/products/{{src}}" alt="{{alt}}" style="width: 100%;">
@@ -25,15 +24,51 @@ into the {body} tag of the default.hbs template --}}
                 {{ title }}
             </h4>
             <span id="" class="">
-                <span class=""><span class="money">{{formatPrice variants.[0].price 'USD'}}</span></span>
+                <span class=""><span class="money">{{formatPrice variants.[0].price site.commerce_currency}}</span></span>
             </span>
             <p>{{{description}}}</p>
+            {{#if event}}
+                <br/>
+                {{#foreach variants}}
+                    <p>
+                        {{#if (or (gt inventory_quantity 0) (eq inventory_policy "allow"))}}
+                            {{#if optiononevalue.value}}
+                                {{ optiononevalue.value }}
+                            {{else}}
+                                {{../title}}
+                            {{/if}}
+                            {{#if optiontwovalue.value}}
+                                / {{ optiontwovalue.value }}
+                            {{/if}}
+                            {{#if optionthreevalue.value}}
+                                / {{ optionthreevalue.value }}
+                            {{/if}}
+                        {{ else }}
+                            {{#if optiononevalue.value}}
+                                {{ optiononevalue.value }}
+                            {{else}}
+                                {{../title}}
+                            {{/if}}
+                            {{#if optiontwovalue.value}}
+                                / {{ optiontwovalue.value }}
+                            {{/if}}
+                            {{#if optionthreevalue.value}}
+                                / {{ optionthreevalue.value }}
+                            {{/if}} - Sold out
+                        {{/if}}
+                    </p>
+                    <p>
+                        Starts: {{ date starts_at format="MMMM D, YYYY at h:mm A" }}<br/>
+                        Ends: {{ date ends_at format="MMMM D, YYYY at h:mm A" }}<br/>
+                    </p>
+                {{/foreach}}
+            {{/if}}
             <div class="cartanza-product-form-container">
                 <form action="/cart/add" method="post" enctype="multipart/form-data" id="form_buy">
                 <div class="cartanza-product-form-select-container" style="margin: 20px;border: 1px solid #e6e6e6 !important;border-radius: 2px;">
                     <select name="id" id="variant-selector" class="form-control" style="display: block;width: 100%;padding: .5rem .75rem;color: #495057;border:1px solid rgba(0, 0, 0, .15);border-radius:.25rem;">
                         {{#foreach variants}}
-                        {{#if (gt inventory_quantity 0)}}
+                        {{#if (or (gt inventory_quantity 0) (eq inventory_policy "allow"))}}
                         <option data-sku="{{ sku }}" value="{{ id }}">
                             {{#if optiononevalue.value}}
                                 {{ optiononevalue.value }}
@@ -46,7 +81,7 @@ into the {body} tag of the default.hbs template --}}
                             {{#if optionthreevalue.value}}
                                 / {{ optionthreevalue.value }}
                             {{/if}}
-                             - {{ formatPrice price 'USD' }}
+                             - {{ formatPrice price site.commerce_currency }}
                         </option>
                         {{ else }}
                         <option disabled="disabled">
@@ -68,7 +103,7 @@ into the {body} tag of the default.hbs template --}}
                 </div>
                 <div class="cartanza-product-form-button-container">
                     {{#foreach variants}}
-                        {{#if (gt inventory_quantity 0)}}
+                        {{#if (or (gt inventory_quantity 0) (eq inventory_policy "allow"))}}
                             {{#if (eq @index 0) }}
                             <div class="cartanza-product-quantity-container" style="margin:20px;display:flex;align-items:center;">
                             <div class="cartanza-product-input-container" style="border:2px solid #e6e6e6;border-radius: 3px;">
@@ -92,12 +127,13 @@ into the {body} tag of the default.hbs template --}}
             </div>
         </div>
     </div>
-{{/cartanza_product}}
+{{/with}}
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     registerProductImagePicker('product-image-picker','product-image-target');
     registerQuantityButton('button-minus','button-plus', 'input-quantity');
     registerAddToCartButton('button-cart');
-    window.onload = function() {
-        getCart();
-    }
+});
 </script>
+{{/inline}}
+{{> default}}

@@ -1,53 +1,54 @@
-<header id="gh-navigation" class="gh-navigation is-{{#match navigationLayout "Logo on the left"}}left-logo{{else match navigationLayout "Stacked"}}stacked{{else}}middle-logo{{/match}}{{#match @custom.header_and_footer_color "Accent color"}} has-accent-color{{/match}} gh-outer">
+<header id="gh-navigation" class="gh-navigation is-{{#match navigationLayout "Logo on the left"}}left-logo{{else match navigationLayout "Stacked"}}stacked{{else}}middle-logo{{/match}}{{#match @root.custom.header_and_footer_color "Accent color"}} has-accent-color{{/match}} gh-outer">
     <div class="gh-navigation-inner gh-inner">
 
         <div class="gh-navigation-brand">
-            <a class="gh-navigation-logo is-title" href="{{@site.url}}">
-                {{#if @site.logo}}
-                    <img src="{{@site.logo}}" alt="{{@site.title}}">
+            <a class="gh-navigation-logo is-title" href="{{@root.site.url}}">
+                {{#if @root.site.logo}}
+                    <img src="{{@root.site.logo}}" alt="{{@root.site.title}}">
                 {{else}}
-                    {{@site.title}}
+                    {{@root.site.title}}
                 {{/if}}
             </a>
-            {{> "search-toggle"}}
+            {{> partials/search-toggle}}
             <button class="gh-burger gh-icon-button" aria-label="Menu">
-                {{> "icons/burger"}}
-                {{> "icons/close"}}
+                {{> partials/icons/burger}}
+                {{> partials/icons/close}}
             </button>
         </div>
 
         <nav class="gh-navigation-menu">
             {{navigation}}
-            {{#unless @site.members_enabled}}
+            {{#unless @root.site.members_enabled}}
                 {{#match navigationLayout "Stacked"}}
-                    {{> "search-toggle"}}
+                    {{> partials/search-toggle}}
                 {{/match}}
             {{/unless}}
         </nav>
 
         <div class="gh-navigation-actions">
-            {{#unless @site.members_enabled}}
-                {{^match navigationLayout "Stacked"}}
-                    {{> "search-toggle"}}
+            {{#unless @root.site.members_enabled}}
+                {{#match navigationLayout "!=" "Stacked"}}
+                    {{> partials/search-toggle}}
                 {{/match}}
             {{else}}
-                {{> "search-toggle"}}
+                {{> partials/search-toggle}}
                 <div class="gh-navigation-members">
-                    {{#unless @member}}
-                        {{#unless @site.members_invite_only}}
-                            <a href="#/portal/signin" data-portal="signin">Sign in</a>
+                    {{#unless @root.member}}
+                        {{#unless @root.site.members_invite_only}}
+                            <a href="/#/portal/signin" data-portal="signin">Sign in</a>
                             {{#unless hideSubscribeButton}}
-                                <a class="gh-button" href="#/portal/signup" data-portal="signup">Subscribe</a>
+                                <a class="gh-button" href="/#/portal/signup" data-portal="signup">Subscribe</a>
                             {{/unless}}
                         {{else}}
-                            <a class="gh-button" href="#/portal/signin" data-portal="signin">Sign in</a>
+                            <a class="gh-button" href="/#/portal/signin" data-portal="signin">Sign in</a>
                         {{/unless}}
                     {{else}}
                         <a class="gh-button" href="/account">Account</a>
                     {{/unless}}
+                    {{#if @root.site.commerce_enabled}}
                     <div class="cartanza-cart-container">
                         <i class="fs-12 fa fa-shopping-bag" aria-hidden="true" style="color:#666666;font-size: 2em;margin-top: 15px;"></i>
-                        <span class="header-icons-noti cartanza-cart-total" style="display: -webkit-box;display: -webkit-flex;display: -moz-box;display: -ms-flexbox;display: flex;justify-content: center;align-items: center;width: 20px;height: 20px;border-radius: 50%;background-color: #111111;color: white;font-size: 12px;position: relative;top: -30px;right: -20px;" >3</span>
+                        <span class="header-icons-noti cartanza-cart-total" style="display: -webkit-box;display: -webkit-flex;display: -moz-box;display: -ms-flexbox;display: flex;justify-content: center;align-items: center;width: 20px;height: 20px;border-radius: 50%;background-color: #111111;color: white;font-size: 12px;position: relative;top: -30px;right: -20px;" >0</span>
                         <div class="cartanza-header-cart">
                             <ul class="header-cart-wrapitem" style="max-height: 270px;overflow: auto;">
                                 <li class="header-cart-item" style="text-align: center;">
@@ -71,8 +72,9 @@
                                 </a>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     </div>
+                    {{/if}}
                 </div>
             {{/unless}}
         </div>

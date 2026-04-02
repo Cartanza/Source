@@ -2420,24 +2420,29 @@ blockquote.kg-blockquote-alt {
 
 /* Product */
 
-.kg-product-card.kg-card .kg-product-card-image {
+.kg-product-card.kg-card .kg-product-card-image,
+.kg-product-collection-card.kg-card .kg-product-card-image {
     margin-bottom: 12px;
 }
 
-.kg-product-card.kg-card a.kg-product-card-button {
+.kg-product-card.kg-card a.kg-product-card-button,
+.kg-product-collection-card.kg-card a.kg-product-card-button {
     height: 2.8em;
     margin-top: 12px;
 }
 
-.has-serif-title .kg-product-card.kg-card .kg-product-card-title {
+.has-serif-title .kg-product-card.kg-card .kg-product-card-title,
+.has-serif-title .kg-product-collection-card.kg-card .kg-product-card-title {
     font-family: var(--font-serif);
 }
 
-.has-mono-title .kg-product-card.kg-card .kg-product-card-title {
+.has-mono-title .kg-product-card.kg-card .kg-product-card-title,
+.has-mono-title .kg-product-collection-card.kg-card .kg-product-card-title {
     font-family: var(--font-mono);
 }
 
-.has-serif-body .kg-product-card-description :is(p, ul, ol) {
+.has-serif-body .kg-product-card-description :is(p, ul, ol),
+.has-serif-body .kg-product-collection-card.kg-card .kg-product-card-description :is(p, ul, ol) {
     font-family: var(--font-serif-alt);
 }
 

@@ -3,15 +3,15 @@
     * footerText (text)
 --}}
 
-<footer class="gh-foot gh-outer">
-    <div class="gh-foot-inner gh-inner">
-        <nav class="gh-foot-menu">
+<footer class="gh-footer gh-outer">
+    <div class="gh-footer-inner gh-inner">
+        <nav class="gh-footer-menu">
             {{navigation type="secondary"}}
         </nav>
 
         <div class="gh-copyright">
             {{#unless footerText}}
-                {{@site.title}} &copy; {{date format="YYYY"}}. <a href="https://cartanza.com/" target="_blank" rel="noopener">Powered by Cartanza</a>
+                {{@root.site.title}} &copy; {{date format="YYYY"}}. <a href="https://cartanza.com/" target="_blank" rel="noopener">Powered by Cartanza</a>
             {{else}}
                 {{footerText}}
             {{/unless}}

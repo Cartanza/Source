@@ -1,5 +1,5 @@
-<article class="gh-card {{post_class}}{{#unless @custom.show_images_in_feed}} no-image{{/unless}}">
-    <a class="gh-card-link" href="{{url}}">
+<article class="gh-card {{post_class}}{{#unless @root.custom.show_images_in_feed}} no-image{{/unless}}">
+    <a class="gh-card-link" href="/{{slug}}">
         {{#if feature_image}}
             <figure class="gh-card-image">
                 <img
@@ -31,15 +31,15 @@
             {{/unless}}
             <footer class="gh-card-meta">
                 {{#unless access}}
-                    {{^has visibility="public"}}
-                        {{> "icons/lock"}}
-                    {{/has}}
+                    {{#match visibility "!=" "public"}}
+                        {{> partials/icons/lock}}
+                    {{/match}}
                 {{/unless}}<!--
-             -->{{#if @custom.show_author}}
+             -->{{#if @root.custom.show_author}}
                     <span class="gh-card-author">By {{#foreach authors}}{{#if @first}}{{name}}{{else}}, {{name}}{{/if}}{{/foreach}}</span>
                 {{/if}}
-                {{#if @custom.show_publish_date}}
-                    <time class="gh-card-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                {{#if @root.custom.show_publish_date}}
+                    <time class="gh-card-date" datetime="{{date published_at format="YYYY-MM-DD"}}">{{date published_at format="DD MMM YYYY"}}</time>
                 {{/if}}<!--
          --></footer>
         </div>
