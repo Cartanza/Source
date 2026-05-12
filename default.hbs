@@ -72,6 +72,21 @@
 {{!-- Scripts - handle responsive videos, infinite scroll, and navigation dropdowns --}}
 <script src="{{asset "built/source.js"}}"></script>
 
+<style>
+    .cartanza-cart-container {
+        position: relative;
+    }
+    .cartanza-header-cart {
+        right: 0 !important;
+        top: 100% !important;
+    }
+    @media (max-width: 767px) {
+        .cartanza-header-cart {
+            display: none !important;
+        }
+    }
+</style>
+
 <script>
     // Select the cart icon and header cart elements
     const cartIcon = document.querySelector('i.fs-12.fa.fa-shopping-bag');
@@ -80,7 +95,11 @@
 
         document.addEventListener('click', (event) => {
             if (cartIcon.contains(event.target)) {
-                headerCart.classList.toggle('show-header-dropdown');
+                if (window.innerWidth < 768) {
+                    window.location.href = '/cart';
+                } else {
+                    headerCart.classList.toggle('show-header-dropdown');
+                }
             } else if (!headerCart.contains(event.target)) {
                 headerCart.classList.remove('show-header-dropdown');
             }

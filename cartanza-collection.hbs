@@ -18,7 +18,7 @@ into the {body} tag of the default.hbs template --}}
     <div class="cartanza-collection-card">
         {{#link href=(concat '/products/' slug '/') activeClass="current"}}
         <div class="cartanza-collection-card-picture">
-            <img class="cartanza-collection-card-picture-background" src="/content/images/products/{{img_url images.[0].src}}" width="183" loading="lazy" alt="{{title}}">
+            <img class="cartanza-collection-card-picture-background" src="{{product_image_url (img_url images.[0].src)}}" width="183" loading="lazy" alt="{{title}}">
         </div>
         <div class="cartanza-collection-card-info">
             <div>
